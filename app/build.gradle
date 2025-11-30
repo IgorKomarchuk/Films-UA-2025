@@ -1,0 +1,79 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.13.4'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 33
+    defaultConfig {
+        applicationId "com.film.tube"
+
+        manifestPlaceholders = [onesignal_app_id: "abb55141-38a2-4f37-a362-e569aa50123f",
+                                // Project number pulled from dashboard, local value is ignored.
+                                onesignal_google_project_number: "REMOTE"]
+
+        minSdkVersion 16
+        targetSdkVersion 33
+        versionCode 17
+        versionName "7.0.0"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    useLibrary 'org.apache.http.legacy'
+}
+
+/* IMPORTANT : Highly recommended to keep the library version
+Be careful when update dependencies, different library version may caused error */
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleDependency
+    implementation "com.google.android.exoplayer:exoplayer:$exoplayer_version"
+    implementation "com.google.android.exoplayer:extension-rtmp:$exoplayer_version"
+    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    //noinspection GradleDependency
+    implementation 'com.google.android.gms:play-services-ads:19.0.1'
+    implementation 'com.google.firebase:firebase-core:21.1.0'
+    implementation 'com.google.firebase:firebase-messaging:23.0.7'
+    implementation 'com.balysv:material-ripple:1.0.2'
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.onesignal:OneSignal:4.4.1'
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+    implementation 'com.google.android.ads.consent:consent-library:1.0.8'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.startapp:inapp-sdk:4.8.11'
+    implementation 'com.facebook.android:audience-network-sdk:6.7.0'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    implementation 'com.duolingo.open:rtl-viewpager:2.0.0'
+}
+
+apply plugin: 'com.google.gms.google-services'
